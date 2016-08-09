@@ -49,4 +49,23 @@ describe Contact do
     )
     expect(contact.name).to eq 'John Doe'
   end
+
+  it "retunrs a sorted array of results that match" do
+    smith = Contact.create(
+      firstname: 'John',
+      lastname: 'Smith',
+      email: 'jsmith@example.com'
+    )
+    jones = Contact.create(
+      firstname: 'Tim',
+      lastname: 'Jones',
+      email: 'tjones@example.com'
+    )
+    johnson = Contact.create(
+      firstname: 'John',
+      lastname: 'Johnson',
+      email: 'jjohnson@example.com'
+    )
+    expect(Contact.by_letter("J")).to eq [johnson, jones]
+  end
 end
