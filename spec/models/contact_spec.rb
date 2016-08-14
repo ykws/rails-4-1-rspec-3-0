@@ -50,41 +50,35 @@ describe Contact do
     expect(contact.name).to eq 'John Doe'
   end
 
-  it "retunrs a sorted array of results that match" do
-    smith = Contact.create(
-      firstname: 'John',
-      lastname: 'Smith',
-      email: 'jsmith@example.com'
-    )
-    jones = Contact.create(
-      firstname: 'Tim',
-      lastname: 'Jones',
-      email: 'tjones@example.com'
-    )
-    johnson = Contact.create(
-      firstname: 'John',
-      lastname: 'Johnson',
-      email: 'jjohnson@example.com'
-    )
-    expect(Contact.by_letter("J")).to eq [johnson, jones]
-  end
+  describe "filter last name by letter" do
+    before :each do
+      @smith = Contact.create(
+        firstname: 'John',
+        lastname: 'Smith',
+        email: 'jsmith@example.com'
+      )
+      @jones = Contact.create(
+        firstname: 'Tim',
+        lastname: 'Jones',
+        email: 'tjones@example.com'
+      )
+      @johnson = Contact.create(
+        firstname: 'John',
+        lastname: 'Johnson',
+        email: 'jjohnson@example.com'
+      )
+    end
+    
+    context "matching letters" do
+      it "retunrs a sorted array of results that match" do
+        expect(Contact.by_letter("J")).to eq [@johnson, @jones]
+      end
+    end
 
-  it "omits results that do not match" do
-    smith = Contact.create(
-      firstname: 'John',
-      lastname: 'Smith',
-      email: 'jsmith@exmaple.com'
-    )
-    jones = Contact.create(
-      firstname: 'Tim',
-      lastname: 'Jones',
-      email: 'tjones@exmaple.com'
-    )
-    johnson = Contact.create(
-      firstname: 'John',
-      lastname: 'Johnson',
-      email: 'jjohnson@example.com'
-    )
-    expect(Contact.by_letter("J")).not_to include smith
+    context "non-matching letters" do
+      it "omits results that do not match" do
+        expect(Contact.by_letter("J")).not_to include @smith
+      end
+    end
   end
 end
