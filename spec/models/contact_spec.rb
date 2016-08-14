@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Contact do
+  it "has a valid factory" do
+    expect(FactoryGirl.build(:contact)).to be_valid
+  end
+
   it "is valid with a firstname, lastname and email" do
     contact = Contact.new(
       firstname: 'Aaron',
@@ -68,7 +72,7 @@ describe Contact do
         email: 'jjohnson@example.com'
       )
     end
-    
+
     context "matching letters" do
       it "retunrs a sorted array of results that match" do
         expect(Contact.by_letter("J")).to eq [@johnson, @jones]
