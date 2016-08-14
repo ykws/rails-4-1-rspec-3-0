@@ -69,4 +69,8 @@ describe Contact do
       end
     end
   end
+
+  it "has three phone numbers" do
+    expect(create(:contact).phones.count).to eq 3
+  end
 end
